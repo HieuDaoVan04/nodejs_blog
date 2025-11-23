@@ -5,6 +5,9 @@
 
   const app = express()
 
+  //static files
+  app.use(express.static(path.join(__dirname, 'public')))
+
   //HTTP Logger
   app.use(morgan('combined'))
 
@@ -13,9 +16,16 @@
     extname: '.hbs',
   }))
   app.set('view engine', 'hbs')
-  app.set('views', './views')
+  app.set('view engine', 'hbs')
+  app.engine('hbs', engine({
+    extname: '.hbs',
+    defaultLayout: 'main',
+    layoutsDir: path.join(__dirname, 'resource', 'views', 'layouts'),
+    partialsDir: path.join(__dirname, 'resource', 'views', 'partials'),
+  }))
   app.set('views', path.join(__dirname, 'resource', 'views'))
 
+  
   app.get('/', (req, res) => {
       res.render('home')
   })
