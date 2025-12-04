@@ -2,8 +2,10 @@
   const express = require('express')
   const morgan = require('morgan')
   const { engine } = require('express-handlebars')
-
   const app = express()
+  const port = 3000
+  
+ const route = require('./routes')
 
   //static files
   app.use(express.static(path.join(__dirname, 'public')))
@@ -16,7 +18,6 @@
     extname: '.hbs',
   }))
   app.set('view engine', 'hbs')
-  app.set('view engine', 'hbs')
   app.engine('hbs', engine({
     extname: '.hbs',
     defaultLayout: 'main',
@@ -25,19 +26,11 @@
   }))
   app.set('views', path.join(__dirname, 'resource', 'views'))
 
-  
-  app.get('/', (req, res) => {
-      res.render('home')
-  })
+  // Routes init
+  route(app)
 
-  app.get('/news', (req, res) => {
-      res.render('news')
-  })
-  const port = 3000
 
-  // app.get('/', (req, res) => {
-  //   res.render('Hello World!')
-  // })
+
 
   app.listen(port, () => {
     console.log(`Example app listening on port http://localhost:${port}`)
