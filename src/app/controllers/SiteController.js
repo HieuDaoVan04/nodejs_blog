@@ -1,7 +1,20 @@
+const Course = require('../models/Course');
+
 class SiteController {
   //GET /home
-  index(req, res) {
-    res.render('home');
+  // index(req, res) {
+  // res.render('home');
+  // }
+  async index(req, res, next) {
+    try {
+      const courses = await Course.find({}).lean();
+
+      res.render('home', { courses });
+    } catch (err) {
+      // console.log(err);
+      // res.status(500).send('ERROR!!!');
+      next(err);
+    }
   }
 
   //GET /search
